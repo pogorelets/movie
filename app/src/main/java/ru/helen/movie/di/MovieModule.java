@@ -5,6 +5,7 @@ import dagger.Provides;
 import ru.helen.movie.feature.movie.Contractor;
 import ru.helen.movie.feature.movie.InteractorImpl;
 import ru.helen.movie.feature.movie.Presenter;
+import ru.helen.movie.repository.DatabaseRepository;
 import ru.helen.movie.repository.NetworkRepository;
 
 /**
@@ -26,8 +27,8 @@ public class MovieModule {
 
     @MovieScope
     @Provides
-    Contractor.Interactor provideIneractor(NetworkRepository networkRepository){
-        return new InteractorImpl(networkRepository);
+    Contractor.Interactor provideIneractor(NetworkRepository networkRepository, DatabaseRepository databaseRepository){
+        return new InteractorImpl(networkRepository, databaseRepository);
     }
 
     @MovieScope

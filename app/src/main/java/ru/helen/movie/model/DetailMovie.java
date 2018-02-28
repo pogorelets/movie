@@ -5,7 +5,11 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
-public class DetailMovie  {
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
+public class DetailMovie extends RealmObject {
+    @PrimaryKey
     @SerializedName("id")
     @Expose
     private Integer id;

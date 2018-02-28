@@ -3,12 +3,15 @@ package ru.helen.movie.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
-public class Movie {
+
+public class Movie extends RealmObject{
     @SerializedName("vote_count")
     @Expose
     private Integer voteCount;
-
+    @PrimaryKey
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -33,9 +36,6 @@ public class Movie {
     @SerializedName("original_title")
     @Expose
     private String originalTitle;
-//    @SerializedName("genre_ids")
-//    @Expose
-//    private List<Integer> genreIds = null;
     @SerializedName("backdrop_path")
     @Expose
     private String backdropPath;

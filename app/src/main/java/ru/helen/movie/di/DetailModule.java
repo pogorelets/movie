@@ -5,6 +5,7 @@ import dagger.Provides;
 import ru.helen.movie.feature.detailmovie.Contractor;
 import ru.helen.movie.feature.detailmovie.InteractorImpl;
 import ru.helen.movie.feature.detailmovie.Presenter;
+import ru.helen.movie.repository.DatabaseRepository;
 import ru.helen.movie.repository.NetworkRepository;
 
 /**
@@ -24,8 +25,8 @@ public class DetailModule {
 
     @DetailScope
     @Provides
-    Contractor.Interactor provideInteractor(NetworkRepository networkRepository){
-        return new InteractorImpl(networkRepository);
+    Contractor.Interactor provideInteractor(NetworkRepository networkRepository, DatabaseRepository databaseRepository){
+        return new InteractorImpl(networkRepository, databaseRepository);
     }
 
     @DetailScope

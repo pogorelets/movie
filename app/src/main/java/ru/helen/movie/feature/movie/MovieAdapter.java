@@ -50,7 +50,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         Picasso.with(context)
                 .load(PATH + movies.get(position).getPosterPath())
                 .placeholder( R.drawable.progress_animation )
-                .networkPolicy(NetworkPolicy.OFFLINE)
                 .into(holder.imageView);
 
         holder.imageView.setOnClickListener(v -> listener.onShowMovieDetail(movies.get(position)));

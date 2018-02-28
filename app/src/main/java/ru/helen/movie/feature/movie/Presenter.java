@@ -7,6 +7,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import ru.helen.movie.model.Movie;
+import ru.helen.movie.model.PageMovie;
 
 /**
  * Presenter for feature topmovie
@@ -15,6 +16,9 @@ import ru.helen.movie.model.Movie;
 public class Presenter implements Contractor.OnMoviesLoadedListener{
     private Contractor.ViewTopMovie view;
     private Contractor.Interactor  interactor;
+
+    private int counttop = 0;
+    private int countpopular = 0;
 
     @Inject
     public Presenter(Contractor.ViewTopMovie view,
@@ -37,7 +41,8 @@ public class Presenter implements Contractor.OnMoviesLoadedListener{
     }
 
     @Override
-    public void onLoadMoviesSuccess(List<Movie> movie) {
-          view.updateAdapter(movie);Log.e("MOVIE", movie.toString());
+    public void onLoadMoviesSuccess(PageMovie page) {
+          //TODO
+           view.updateAdapter(page.getResults());
     }
 }

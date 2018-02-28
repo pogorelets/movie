@@ -1,6 +1,7 @@
 package ru.helen.movie.di;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -12,6 +13,8 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -19,6 +22,8 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
+import ru.helen.movie.repository.DatabaseRepository;
+import ru.helen.movie.repository.DatabaseRepositoryImpl;
 import ru.helen.movie.repository.NetworkRepository;
 import ru.helen.movie.repository.NetworkRepositoryImpl;
 import ru.helen.movie.repository.ThemoviedbAPI;
@@ -33,6 +38,28 @@ public class AppModule {
 
     public AppModule(Context context) {
         this.context = context;
+        Realm.init(context);
+
+    }
+
+    @Provides
+    @Singleton
+    DatabaseRepository provideDatabaseRepository(Realm realm) {
+        return new DatabaseRepositoryImpl(realm);
+    }
+
+    @Provides
+    @Singleton
+    Realm provideRealm(@NonNull RealmConfiguration configuration) {
+        return Realm.getInstance(configuration);
+    }
+
+    @Provides
+    @Singleton
+    RealmConfiguration provideRealmConfiguration() {
+        return new RealmConfiguration.Builder()
+                .deleteRealmIfMigrationNeeded()
+                .build();
     }
 
     @Provides
@@ -99,5 +126,7 @@ public class AppModule {
     NetworkRepository provideNetworkRepository(ThemoviedbAPI themoviedbAPI) {
         return new NetworkRepositoryImpl(themoviedbAPI);
     }
+
+
 
 }

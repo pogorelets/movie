@@ -104,6 +104,13 @@ public class MovieFragment extends Fragment implements Contractor.ViewTopMovie, 
             typemovie = getArguments().getString(TYPEMOVIE);
         }
 
+        recyclerView = view.findViewById(R.id.recyclerView);
+        adapter = new MovieAdapter(getActivity(),new ArrayList<>(), this);
+        gridLayoutManager = new GridLayoutManager(getActivity(),3);
+        recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.setAdapter(adapter);
+        recyclerView.addOnScrollListener(scrollListener);
+
         switch (typemovie){
             case POPULAR: presenter.getAllMovies(token, language, pageall);
                 flag = POPULAR;
@@ -118,13 +125,6 @@ public class MovieFragment extends Fragment implements Contractor.ViewTopMovie, 
                 break;
 
         }
-
-        recyclerView = view.findViewById(R.id.recyclerView);
-        adapter = new MovieAdapter(getActivity(),new ArrayList<>(), this);
-        gridLayoutManager = new GridLayoutManager(getActivity(),3);
-        recyclerView.setLayoutManager(gridLayoutManager);
-        recyclerView.setAdapter(adapter);
-        recyclerView.addOnScrollListener(scrollListener);
 
     }
 
