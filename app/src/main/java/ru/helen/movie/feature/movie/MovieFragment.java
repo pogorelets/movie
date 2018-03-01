@@ -57,10 +57,11 @@ public class MovieFragment extends Fragment implements Contractor.ViewTopMovie, 
             int spanItemCount = gridLayoutManager.getSpanCount();
             int lastVisibleItem = gridLayoutManager.findLastCompletelyVisibleItemPosition();
             if (totalItemCount - lastVisibleItem <= spanItemCount){
-                if (flag.equals(POPULAR)){
+                if (flag.equals(POPULAR)) {
                     pageall = pageall + 1;
-                    presenter.getAllMovies(token,language,pageall);
-                } else {
+                    presenter.getAllMovies(token, language, pageall);
+                }
+                if (flag.equals(TOP))    {
                     pagetop = pagetop + 1;
                     presenter.getTopMovie(token,language, pagetop);
                 }
@@ -120,9 +121,9 @@ public class MovieFragment extends Fragment implements Contractor.ViewTopMovie, 
                 flag = TOP;
                 break;
 
-            default: presenter.getAllMovies(token, language, pageall);
-                flag = POPULAR;
-                break;
+//            default: presenter.getAllMovies(token, language, pageall);
+//                flag = POPULAR;
+//                break;
 
         }
 

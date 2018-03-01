@@ -10,8 +10,8 @@ import ru.helen.movie.model.PageMovie;
 
 public class DatabaseRepositoryImpl implements DatabaseRepository {
     private final Realm realm;
-    private static final String TOP = "top";
-    private static final String POPULAR = "popular";
+    public static final String TOP = "top";
+    public static final String POPULAR = "popular";
     private static final String TYPEMOVIE = "typemovie";
     private static final String PAGE = "page";
     private static final String ID = "id";
@@ -20,22 +20,21 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
         this.realm = realm;
     }
 
-    @Override
-    public void insertPageTopRated(PageMovie page) {
-        page.setTypemovie(TOP);
-        insertPage(page);
-    }
 
     @Override
-    public void insertPagePopular(PageMovie page) {
-        page.setTypemovie(POPULAR);
-        insertPage(page);
+    public void insertPage(PageMovie page){
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                page.setId(getId());
+                realm.insertOrUpdate(page);
+            }
+        });
     }
-
-    private void insertPage(PageMovie page){
-        realm.beginTransaction();
-        realm.insert(page);
-        realm.commitTransaction();
+    private int getId(){
+        Number currentIdNum = realm.where(PageMovie.class).max("id");
+        int nextId = currentIdNum == null ? 1 : currentIdNum.intValue() + 1;
+        return nextId;
     }
 
     @Override
@@ -47,7 +46,13 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
 
     @Override
     public void clearAll() {
-        realm.deleteAll();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.deleteAll();
+            }
+        });
+
     }
 
     @Override

@@ -9,9 +9,7 @@ import ru.helen.movie.model.PageMovie;
 
 public interface DatabaseRepository {
 
-    void insertPageTopRated(PageMovie page);
-
-    void insertPagePopular(PageMovie page);
+    void insertPage(PageMovie page);
 
     void insertDetailMovie(DetailMovie detail);
 

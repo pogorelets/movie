@@ -10,6 +10,8 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 public class PageMovie extends RealmObject{
+    @PrimaryKey
+    private int id;
     @SerializedName("page")
     @Expose
     private Integer page;
@@ -22,6 +24,14 @@ public class PageMovie extends RealmObject{
     @SerializedName("results")
     @Expose
     private RealmList<Movie> results = null;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     private String typemovie;
 

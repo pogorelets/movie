@@ -17,9 +17,6 @@ public class Presenter implements Contractor.OnMoviesLoadedListener{
     private Contractor.ViewTopMovie view;
     private Contractor.Interactor  interactor;
 
-    private int counttop = 0;
-    private int countpopular = 0;
-
     @Inject
     public Presenter(Contractor.ViewTopMovie view,
                      Contractor.Interactor interactor) {
