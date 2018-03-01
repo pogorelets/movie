@@ -37,10 +37,6 @@ public class App extends Application {
                 .appModule(new AppModule(getApplicationContext())).build();
     }
 
-    public static AppComponent getComponent(Context context) {
-        return ((App) context.getApplicationContext()).appComponent;
-    }
-
     public MainComponent initMainComponent(MainActivity activity) {
         mainComponent = appComponent.getMainComponent(new MainModule(activity));
         return mainComponent;
