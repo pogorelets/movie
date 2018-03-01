@@ -25,10 +25,10 @@ public class InteractorImpl implements Contractor.Interactor {
     @Override
     public void getMovieTopRated(String token, String language, int pager, Contractor.OnMoviesLoadedListener listener) {
         PageMovie pageMovie = databaseRepository.getTopRatedPage(pager);
-        if (pageMovie != null && pageMovie.getTotalPages() < pager) {
-            if (pager != 1) {
-                listener.onLoadMoviesSuccess(pageMovie);
-            } else {
+        if (pageMovie != null && pager != 1) {
+            listener.onLoadMoviesSuccess(pageMovie);
+        } else {
+            if ((pageMovie != null && pageMovie.getTotalPages() < pager) || pageMovie == null || pager == 1) {
                 networkRepository.getMovieTopRated(token, language, pager).subscribe(page -> {
                             page.setTypemovie(TOP);
                             if (pager == 1) {
@@ -44,6 +44,7 @@ public class InteractorImpl implements Contractor.Interactor {
 
                         },
                         throwable -> listener.onLoadMoviesError(throwable.toString()));
+
             }
         }
 
@@ -52,10 +53,11 @@ public class InteractorImpl implements Contractor.Interactor {
     @Override
     public void getMoviePopular(String token, String language, int pager, Contractor.OnMoviesLoadedListener listener) {
         PageMovie pageMovie = databaseRepository.getPopularPage(pager);
-        if (pageMovie != null && pageMovie.getTotalPages() < pager) {
-            if (pager != 1) {
-                listener.onLoadMoviesSuccess(pageMovie);
-            } else {
+        if (pageMovie != null && pager != 1) {
+
+            listener.onLoadMoviesSuccess(pageMovie);
+        } else {
+            if ((pageMovie != null && pageMovie.getTotalPages() < pager) || pageMovie == null || pager == 1) {
                 networkRepository.getMoviePopular(token, language, pager).subscribe(page -> {
                             page.setTypemovie(POPULAR);
                             //При загрузке первой страницы проверяем актуальность локальной бд
