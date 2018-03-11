@@ -4,4 +4,5 @@
 
 ![Главный экран](https://github.com/pogorelets/movie/blob/master/screen.png)
 
+![Детализация](https://github.com/pogorelets/movie/blob/master/screendetail.png)
 
