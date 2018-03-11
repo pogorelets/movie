@@ -2,6 +2,7 @@ package ru.helen.movie;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.v7.app.AppCompatDelegate;
 
 import ru.helen.movie.di.AppComponent;
 import ru.helen.movie.di.AppModule;

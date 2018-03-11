@@ -12,6 +12,7 @@ android {
         vectorDrawables.useSupportLibrary = true
 
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -46,4 +47,5 @@ dependencies {
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
+
 }

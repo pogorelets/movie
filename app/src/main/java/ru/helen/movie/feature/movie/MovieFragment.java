@@ -41,9 +41,6 @@ public class MovieFragment extends Fragment implements Contractor.ViewTopMovie, 
     @Named ("language") String language;
 
     private final static String TYPEMOVIE = "typemovie";
-    private String flag = POPULAR;
-    private int pageall = 1;
-    private int pagetop = 1;
     private RecyclerView.OnScrollListener scrollListener = new RecyclerView.OnScrollListener() {
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -57,14 +54,7 @@ public class MovieFragment extends Fragment implements Contractor.ViewTopMovie, 
             int spanItemCount = gridLayoutManager.getSpanCount();
             int lastVisibleItem = gridLayoutManager.findLastCompletelyVisibleItemPosition();
             if (totalItemCount - lastVisibleItem <= spanItemCount){
-                if (flag.equals(POPULAR)) {
-                    pageall = pageall + 1;
-                    presenter.getAllMovies(token, language, pageall);
-                }
-                if (flag.equals(TOP))    {
-                    pagetop = pagetop + 1;
-                    presenter.getTopMovie(token,language, pagetop);
-                }
+                presenter.loadnext(token, language);
 
             }
         }
@@ -73,7 +63,6 @@ public class MovieFragment extends Fragment implements Contractor.ViewTopMovie, 
     public MovieFragment() {
         // Required empty public constructor
     }
-
 
     public static MovieFragment newInstance(String typemovie) {
         MovieFragment fragment = new MovieFragment();
@@ -106,28 +95,28 @@ public class MovieFragment extends Fragment implements Contractor.ViewTopMovie, 
         }
 
         recyclerView = view.findViewById(R.id.recyclerView);
-        adapter = new MovieAdapter(getActivity(),new ArrayList<>(), this);
+        adapter = new MovieAdapter(getActivity(), this);
         gridLayoutManager = new GridLayoutManager(getActivity(),3);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(adapter);
         recyclerView.addOnScrollListener(scrollListener);
 
         switch (typemovie){
-            case POPULAR: presenter.getAllMovies(token, language, pageall);
-                flag = POPULAR;
+            case POPULAR: presenter.getAllMovies(token, language);
+                presenter.setFlag(POPULAR);
                 break;
 
-            case TOP: presenter.getTopMovie(token, language, pagetop);
-                flag = TOP;
+            case TOP: presenter.getTopMovie(token, language);
+                presenter.setFlag(TOP);
                 break;
-
-//            default: presenter.getAllMovies(token, language, pageall);
-//                flag = POPULAR;
-//                break;
 
         }
 
     }
+//    @Override
+//    public Object onRetainCustomNonConfigurationInstance() {
+//        presenter.getMovieState();
+//    }
 
     @Override
     public void onDestroyView() {

@@ -61,9 +61,19 @@ public class MainActivity extends AppCompatActivity implements Contractor.ViewMa
 
     }
 
+    @Override
+    public Object onRetainCustomNonConfigurationInstance() {
+        FragmentTransaction ft;
+        ft = getSupportFragmentManager().beginTransaction();
+        
+        return super.onRetainCustomNonConfigurationInstance();
+
+    }
+
     private void showFragmentMovie(String typeMovie){
         FragmentTransaction ft;
         MovieFragment movieFragment = MovieFragment.newInstance(typeMovie);
+        movieFragment.setRetainInstance(true);
         ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container_fragment, movieFragment);
         ft.disallowAddToBackStack();
